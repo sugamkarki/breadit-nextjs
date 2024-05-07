@@ -24,7 +24,7 @@ const Layout = async ({
   });
   const subscription = !session?.user
     ? undefined
-    : db.subscription.findFirst({
+    : await db.subscription.findFirst({
         where: {
           subreddit: {
             name: slug,
@@ -76,7 +76,11 @@ const Layout = async ({
                 </div>
               ) : null}
               {subreddit.creatorId !== session?.user.id ? (
-                <SubscribeLeaveToggle subredditId={subreddit.id} />
+                <SubscribeLeaveToggle
+                  subredditId={subreddit.id}
+                  subredditName={subreddit.name}
+                  isSubscribed={isSubscribed}
+                />
               ) : null}
             </dl>
           </div>
